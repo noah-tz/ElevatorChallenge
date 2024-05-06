@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './cssFiles/index.css';
-import ElevatorChallenge from './App';
+import ElevatorChallenge from './ElevatorChallengeApp';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
