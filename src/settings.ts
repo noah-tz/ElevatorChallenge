@@ -6,7 +6,7 @@ interface Settings {
 };
 
 const settings: Settings = {
-    numOfFloors: 3,
+    numOfFloors: 8,
     numOfElevators: 4
 };
 

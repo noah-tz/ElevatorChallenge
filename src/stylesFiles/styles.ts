@@ -34,6 +34,7 @@ export const Elevators = styled.div`
 `
 
 export const Building = styled.div`
+    min-height: 96vh;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -61,7 +62,7 @@ export const metalLinear = styled.button<{isOrdered: boolean}>`
 `
 
 
-export const Floor = styled.div`
+export const Floor = styled.div<{isLastFloor: boolean}>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,7 +76,7 @@ export const Floor = styled.div`
     width: 300px;
     height: 103px;
     text-align: center;
-    border-top: 7px solid black;
+    border-top: ${props => props.isLastFloor? '7px  solid black': 'none'};
 `
 
 

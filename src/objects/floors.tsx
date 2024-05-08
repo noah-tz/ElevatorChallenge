@@ -10,11 +10,11 @@ class Floors extends React.Component {
     render() {
         return (
             <Stiles.Floors>
-            {Array(settings.numOfFloors).fill(null).map((_, idx) => (
-                <Stiles.Floor>
-                    <Stiles.metalLinear isOrdered={false}>{idx +1}</Stiles.metalLinear>
-                </Stiles.Floor>
-            ))}
+                {Array(settings.numOfFloors).fill(null).map((_, idx) => (
+                    <Stiles.Floor isLastFloor={idx < settings.numOfFloors -1}>
+                        <Stiles.metalLinear isOrdered={false}>{idx +1}</Stiles.metalLinear>
+                    </Stiles.Floor>
+                ))}
             </Stiles.Floors>
         )
     }

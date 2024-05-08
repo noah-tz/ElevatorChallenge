@@ -13,14 +13,10 @@ interface State {
 }
 
 class Buildings extends React.Component<Props, State> {
-    constructor(props: any){
-        super(props);
-        this.setState({numOfBuildings: this.props.numOfBuildings});
-    }
     render() {
         return (
             <Styles.Buildings>
-                {Array(2).fill(null).map((_, idx) => (
+                {Array(this.props.numOfBuildings).fill(null).map(() => (
                     <Building/>
                 ))}
             </Styles.Buildings>
