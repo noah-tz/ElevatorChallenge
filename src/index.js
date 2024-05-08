@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ElevatorChallenge from './ElevatorChallengeApp';
+import ElevatorChallenge from './ElevatorChallengeApp.tsx';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
