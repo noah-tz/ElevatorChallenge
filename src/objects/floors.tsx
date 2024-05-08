@@ -1,21 +1,29 @@
 import React from 'react';
-import * as Stiles from '../stylesFiles/styles.ts';
+import * as Styles from '../stylesFiles/styles.ts';
 import settings from '../settings.ts';
 
-interface Props {
+interface propsFloor {
     numberFloor: number
+}
+class Floor extends React.Component<propsFloor> {
+    isOrdered: boolean = false;
+    render(): React.ReactNode {
+        return(
+            <Styles.Floor isLastFloor={this.props.numberFloor < settings.numOfFloors}>
+                <Styles.metalLinear isOrdered={this.isOrdered}>{this.props.numberFloor }</Styles.metalLinear>
+            </Styles.Floor>
+        )
+    }
 }
 
 class Floors extends React.Component {
     render() {
         return (
-            <Stiles.Floors>
+            <Styles.Floors>
                 {Array(settings.numOfFloors).fill(null).map((_, idx) => (
-                    <Stiles.Floor isLastFloor={idx < settings.numOfFloors -1}>
-                        <Stiles.metalLinear isOrdered={false}>{idx +1}</Stiles.metalLinear>
-                    </Stiles.Floor>
+                    <Floor numberFloor={idx +1}></Floor>
                 ))}
-            </Stiles.Floors>
+            </Styles.Floors>
         )
     }
 }
