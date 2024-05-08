@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as Styles from './stylesFiles/styles.ts'
+import * as Styles from './stylesFiles/elevators.styles.ts'
 import Buildings from './objects/buildings.tsx';
 
 function ElevatorChallenge() {

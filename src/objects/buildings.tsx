@@ -1,7 +1,7 @@
 import React from 'react';
 import Floors from './floors.tsx';
 import Elevators from './elevators.tsx';
-import * as Styles from '../stylesFiles/styles.ts'
+import * as Styles from '../stylesFiles/buildings.styles.ts'
 
 import settings from '../settings.ts';
 

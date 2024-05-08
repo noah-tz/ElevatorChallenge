@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Stiles from '../stylesFiles/styles.ts';
+import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
 import elevatorImage from './elv.png'
 

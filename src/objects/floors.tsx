@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Styles from '../stylesFiles/styles.ts';
+import * as Styles from '../stylesFiles/floors.styles.ts';
 import settings from '../settings.ts';
 
 interface propsFloor {
