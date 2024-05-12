@@ -1,8 +1,8 @@
 import React from 'react';
 import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
-import elevatorImage from './elv.png'
-// import elevatorImage from '../../images/elv.png'
+const elevatorImage = require('./elv.png');
+
 
 interface propsElevator{
     elevatorNumber: number
@@ -11,19 +11,49 @@ interface StateElevator {
     height: number;
 }
 class Elevator extends React.Component<propsElevator, StateElevator>{
-    revers: boolean = false;
+    revers: number = 1;
     orders: number[] = [];
     timerWaiting: number = 0;
+    isMoved: boolean = false;
 
     constructor(props: propsElevator){
         super(props);
         this.state = {
             height: 0
         }
+        // this.moveToFloor(2)
     }
 
     addOrder(numberFloor: number): void{
         this.orders.push(numberFloor);
+        this.setState({height: 500});
+            console.log('aaammm', this.state.height);
+    }
+
+    private moveToFloor(numberFloor: number): void {
+        const heightFloor = numberFloor * 117;
+        const distanceToMove = heightFloor - this.state.height;
+        const framesCount = Math.abs(distanceToMove / 234);
+    
+        const animationInterval = setInterval(() => {
+            if (this.state.height === heightFloor) {
+                clearInterval(animationInterval);
+            } else {
+                const step = distanceToMove / framesCount;
+                this.setState(prevState => ({
+                    height: prevState.height + step
+                }));
+            }
+        }, 1000 / framesCount);
+    }
+
+    private movElevator(): void{
+        if (!this.isMoved) {
+            this.isMoved = true;
+            while (this.orders) {
+                this.moveToFloor(this.orders[0]);
+            }            
+        }
     }
     
     getSecondsOrder(newOrder: number): number{
@@ -66,7 +96,7 @@ class Elevators extends React.Component {
     }
 
     findFasterElevator(numberFloor: number): number {
-        let elevatorFaster = '0';
+        let elevatorFaster = '1';
         let timeElevatorFaster = Infinity;
         for (let elevatorNumber of Object.keys(this.elevators)){
             let timeElevator = this.elevators[Number(elevatorNumber)].getSecondsOrder(numberFloor);
