@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import settings from "../settings.ts"
 
 
 
@@ -10,8 +11,8 @@ export const Buildings = styled.div`
 `
 
 export const Building = styled.div`
-    min-height: 96vh;
+    min-height: ${settings.minHeightBuilding};
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    `
+`

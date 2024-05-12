@@ -2,29 +2,90 @@ import React from 'react';
 import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
 import elevatorImage from './elv.png'
+// import elevatorImage from '../../images/elv.png'
 
 interface propsElevator{
     elevatorNumber: number
 }
-class Elevator extends React.Component<propsElevator>{
-    revers: boolean
-    height: number
+interface StateElevator {
+    height: number;
+}
+class Elevator extends React.Component<propsElevator, StateElevator>{
+    revers: boolean = false;
+    orders: number[] = [];
+    timerWaiting: number = 0;
+
+    constructor(props: propsElevator){
+        super(props);
+        this.state = {
+            height: 0
+        }
+    }
+
+    addOrder(numberFloor: number): void{
+        this.orders.push(numberFloor);
+    }
+    
+    getSecondsOrder(newOrder: number): number{
+        function getSecondsForSingleOrder(previousLocation: number, newOrder: number): number{
+            return Math.abs(previousLocation - newOrder * 117) / 117 * 0.5;
+        }
+        if(!this.orders){
+            return getSecondsForSingleOrder(this.state.height, newOrder) + this.timerWaiting;
+        }
+        let seconds = getSecondsForSingleOrder(this.state.height, this.orders[0]) + this.timerWaiting +2;
+        for (let idxOrder = 1; idxOrder < this.orders.length; idxOrder++){
+            seconds += getSecondsForSingleOrder(this.orders[idxOrder -1] *117, this.orders[idxOrder]) +2;
+        }
+        return seconds;
+    }
+
     render(): React.ReactNode {
         return(
-            <Stiles.Elevator src={elevatorImage} alt={`Elevator number ${this.props.elevatorNumber}`}/>
+            <Stiles.Elevator
+                height={this.state.height}
+                src={elevatorImage}
+                alt={`Elevator number ${this.props.elevatorNumber}`}
+            />
         )
     }
 }
 
 class Elevators extends React.Component {
-    render() {
-        const pathImage: string = './elv.png'
+    elevators: Record<number, Elevator> = {}
+
+    constructor(props: any){
+        super(props);
+        this.createElevators();
+    }
+
+    createElevators(): void {
+        for (let elevatorNumber = 1; elevatorNumber <= settings.numOfElevators; elevatorNumber++) {
+            this.elevators[elevatorNumber] = new Elevator({elevatorNumber: elevatorNumber});
+        }        
+    }
+
+    findFasterElevator(numberFloor: number): number {
+        let elevatorFaster = '0';
+        let timeElevatorFaster = Infinity;
+        for (let elevatorNumber of Object.keys(this.elevators)){
+            let timeElevator = this.elevators[Number(elevatorNumber)].getSecondsOrder(numberFloor);
+            if (timeElevator < timeElevatorFaster) {
+                elevatorFaster = elevatorNumber;
+                timeElevatorFaster = timeElevator;
+            }
+        }
+        this.elevators[elevatorFaster].addOrder(numberFloor);
+        return Number(timeElevatorFaster);
+    }
+
+    render(): React.ReactNode {
         return(
-            <Stiles.Elevators>
-                {Array(settings.numOfElevators).fill(null).map((_, idx) => (
-                    <Elevator elevatorNumber={idx +1}/>
-                ))}
-            </Stiles.Elevators>
+            <>
+            {Object.keys(this.elevators).map((elevatorNumber, _) => (
+                this.elevators[elevatorNumber].render()
+            ))}
+            </>
         )
     }
 }

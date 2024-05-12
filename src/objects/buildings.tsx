@@ -3,7 +3,6 @@ import Floors from './floors.tsx';
 import Elevators from './elevators.tsx';
 import * as Styles from '../stylesFiles/buildings.styles.ts'
 
-import settings from '../settings.ts';
 
 interface Props {
     numOfBuildings: number
@@ -24,14 +23,16 @@ class Buildings extends React.Component<Props, State> {
     }
 }
 
-
-
 class Building extends React.Component {
+    elevators = new Elevators({});
+    // floors = new Floors({ addOrder: this.elevators.findFasterElevator });
+    floors = new Floors({ elevators: this.elevators });
+
     render() {
         return (
             <Styles.Building>
-                <Floors/>
-                <Elevators/>
+                {this.floors.render()}
+                {this.elevators.render()}
             </Styles.Building>
         )
     }

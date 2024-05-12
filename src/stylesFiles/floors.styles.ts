@@ -34,4 +34,4 @@ export const metalLinear = styled.button<{isOrdered: boolean}>`
     -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%), 
     linear-gradient(180deg, hsl(0,0%,78%) 0%, hsl(0,0%,90%) 47%, hsl(0,0%,78%) 53%, hsl(0,0%,70%)100%);
     color: ${props => props.isOrdered? 'green': 'none'};
-    `
+`
