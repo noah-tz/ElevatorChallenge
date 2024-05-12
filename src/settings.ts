@@ -9,8 +9,8 @@ interface Settings {
 
 const settings: Settings = {
     numOfFloors: 8,
-    numOfElevators: 1,
-    numOfBuildings: 1,
+    numOfElevators: 3,
+    numOfBuildings: 2,
     minHeightBuilding: '96vh'
 };
 

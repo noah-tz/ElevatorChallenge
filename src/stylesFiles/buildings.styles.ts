@@ -1,7 +1,10 @@
 import styled from "styled-components"
 import settings from "../settings.ts"
 
-
+export const Floors = styled.div`
+    display: flex;
+    flex-direction: column-reverse;
+`
 
 export const Buildings = styled.div`
     display: flex;

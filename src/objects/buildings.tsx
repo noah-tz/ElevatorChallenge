@@ -1,32 +1,44 @@
 import React from 'react';
-import Floors from './floors.tsx';
+import Floor from './floor.tsx';
 import Elevators from './elevators.tsx';
 import * as Styles from '../stylesFiles/buildings.styles.ts'
 import settings from '../settings.ts';
 
 
 class Buildings extends React.Component {
-    render() {
+    elevatorSystems: Record<number, Elevators> = {};
+    
+    private renderFloors(buildingNumber: number): React.ReactNode {
+        return(
+            <Styles.Floors>
+                {Array(settings.numOfFloors).fill(null).map((_, idx) => (
+                    <Floor
+                        buildingNumber={buildingNumber}    
+                        floorNumber={idx +1}
+                        elevators={this.elevatorSystems[buildingNumber]}
+                    />
+                ))}
+            </Styles.Floors>
+        )
+    }
+    
+    renderBuilding(buildingNumber: number): React.ReactNode {
+        this.elevatorSystems[buildingNumber] = new Elevators({buildingNumber: buildingNumber});
+        return(
+            <Styles.Building>
+                {this.renderFloors(buildingNumber)}
+                {this.elevatorSystems[buildingNumber].render()}
+            </Styles.Building>
+        )
+    }
+
+    render(): React.ReactNode {
         return (
             <Styles.Buildings>
                 {Array(settings.numOfBuildings).fill(null).map((_, idx) => (
-                    <Building key={idx +1}/>
+                    this.renderBuilding(idx +1)
                 ))}
             </Styles.Buildings>
-        )
-    }
-}
-
-class Building extends React.Component {
-    elevators = new Elevators({});
-    floors = new Floors({ elevators: this.elevators });
-
-    render() {
-        return (
-            <Styles.Building>
-                {this.floors.render()}
-                {this.elevators.render()}
-            </Styles.Building>
         )
     }
 }

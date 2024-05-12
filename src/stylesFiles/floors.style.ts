@@ -2,10 +2,7 @@ import styled from "styled-components"
 
 
 
-export const Floors = styled.div`
-    display: flex;
-    flex-direction: column-reverse;
-`
+
 
 export const Floor = styled.div<{isLastFloor: boolean}>`
     display: flex;
