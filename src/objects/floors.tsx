@@ -49,7 +49,7 @@ class Floors extends React.Component<propsFloors> {
             <Styles.Floors>
                 {Array(settings.numOfFloors).fill(null).map((_, idx) => (
                     // <Floor numberFloor={idx +1} addOrder={() => this.props.addOrder(idx +1)}></Floor>
-                    <Floor numberFloor={idx +1} elevators={this.props.elevators}></Floor>
+                    <Floor numberFloor={idx +1} elevators={this.props.elevators} key={idx +1}></Floor>
                 ))}
             </Styles.Floors>
         )

@@ -19,7 +19,7 @@ export const Floor = styled.div<{isLastFloor: boolean}>`
     background-size: 58px 58px;
     background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
     width: 300px;
-    height: 103px;
+    height: 110px;
     text-align: center;
     border-top: ${props => props.isLastFloor? '7px  solid black': 'none'};
 `

@@ -2,21 +2,15 @@ import React from 'react';
 import Floors from './floors.tsx';
 import Elevators from './elevators.tsx';
 import * as Styles from '../stylesFiles/buildings.styles.ts'
+import settings from '../settings.ts';
 
 
-interface Props {
-    numOfBuildings: number
-}
-interface State {
-    numOfBuildings: number
-}
-
-class Buildings extends React.Component<Props, State> {
+class Buildings extends React.Component {
     render() {
         return (
             <Styles.Buildings>
-                {Array(this.props.numOfBuildings).fill(null).map(() => (
-                    <Building/>
+                {Array(settings.numOfBuildings).fill(null).map((_, idx) => (
+                    <Building key={idx +1}/>
                 ))}
             </Styles.Buildings>
         )
@@ -25,7 +19,6 @@ class Buildings extends React.Component<Props, State> {
 
 class Building extends React.Component {
     elevators = new Elevators({});
-    // floors = new Floors({ addOrder: this.elevators.findFasterElevator });
     floors = new Floors({ elevators: this.elevators });
 
     render() {

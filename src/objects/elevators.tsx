@@ -15,47 +15,43 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     orders: number[] = [];
     timerWaiting: number = 0;
     isMoved: boolean = false;
+    currentFloor: number = 0;
+    height: number = 0;
 
     constructor(props: propsElevator){
         super(props);
         this.state = {
             height: 0
         }
-        // this.moveToFloor(2)
     }
 
     addOrder(numberFloor: number): void{
         this.orders.push(numberFloor);
-        this.setState({height: 500});
-            console.log('aaammm', this.state.height);
+        this.moveToNextFloor(this.orders[0]);
     }
-
-    private moveToFloor(numberFloor: number): void {
-        const heightFloor = numberFloor * 117;
-        const distanceToMove = heightFloor - this.state.height;
-        const framesCount = Math.abs(distanceToMove / 234);
     
-        const animationInterval = setInterval(() => {
-            if (this.state.height === heightFloor) {
-                clearInterval(animationInterval);
-            } else {
-                const step = distanceToMove / framesCount;
-                this.setState(prevState => ({
-                    height: prevState.height + step
-                }));
-            }
-        }, 1000 / framesCount);
+    private moveToNextFloor(numberFloor: number): void {
+        const element = document.getElementById(`elevatorNumber ${this.props.elevatorNumber}`)
+        const secondMove = Math.abs(this.currentFloor - numberFloor) / 2;
+        element!.style.transition = `${secondMove}s`;
+        element!.style.marginBottom = `${(numberFloor -1) * 117}px`;
+        this.currentFloor = numberFloor;        
+        this.arrivalToFloor(secondMove);
     }
-
-    private movElevator(): void{
-        if (!this.isMoved) {
-            this.isMoved = true;
-            while (this.orders) {
-                this.moveToFloor(this.orders[0]);
-            }            
+    
+    private arrivalToFloor(standbySeconds: number) {
+        setTimeout(() => {
+            this.orders.shift();
+            // const dingAudio = new Audio('../ding.mp3');
+            // dingAudio.play();
+        }, standbySeconds * 1000);
+        setTimeout(() => {}, 2000);
+        if (this.orders.length > 0) {
+            this.moveToNextFloor(this.orders[0]);         
         }
     }
     
+   
     getSecondsOrder(newOrder: number): number{
         function getSecondsForSingleOrder(previousLocation: number, newOrder: number): number{
             return Math.abs(previousLocation - newOrder * 117) / 117 * 0.5;
@@ -73,7 +69,7 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     render(): React.ReactNode {
         return(
             <Stiles.Elevator
-                height={this.state.height}
+                id={`elevatorNumber ${this.props.elevatorNumber}`}
                 src={elevatorImage}
                 alt={`Elevator number ${this.props.elevatorNumber}`}
             />
@@ -112,8 +108,10 @@ class Elevators extends React.Component {
     render(): React.ReactNode {
         return(
             <>
-            {Object.keys(this.elevators).map((elevatorNumber, _) => (
-                this.elevators[elevatorNumber].render()
+            {Object.keys(this.elevators).map((elevatorNumber, idx) => (
+                <div key={idx +1}>
+                    {this.elevators[elevatorNumber].render()}
+                </div>
             ))}
             </>
         )

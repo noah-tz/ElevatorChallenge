@@ -9,9 +9,8 @@ export const Elevators = styled.div`
     flex-direction: row;
 `
 
-export const Elevator = styled.img<{height: number}>`
+export const Elevator = styled.img`
     width: 110px;
     height: 110px;
-    margin-bottom: ${props=> props.height}px;
 `
 
