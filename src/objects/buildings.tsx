@@ -15,7 +15,7 @@ class Buildings extends React.Component {
                     <Floor
                         buildingNumber={buildingNumber}    
                         floorNumber={idx +1}
-                        elevators={this.elevatorSystems[buildingNumber]}
+                        orderElevator={() => this.orderElevator(idx +1, buildingNumber)}
                     />
                 ))}
             </Styles.Floors>
@@ -30,6 +30,10 @@ class Buildings extends React.Component {
                 {this.elevatorSystems[buildingNumber].render()}
             </Styles.Building>
         )
+    }
+
+    orderElevator(floorNumber: number, buildingNumber): number{
+        return this.elevatorSystems[buildingNumber].orderFasterElevator(floorNumber);
     }
 
     render(): React.ReactNode {

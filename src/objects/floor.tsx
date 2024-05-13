@@ -6,7 +6,7 @@ import Elevators from './elevators.tsx';
 interface propsFloor {
     floorNumber: number,
     buildingNumber: number,
-    elevators:  Elevators
+    orderElevator: () => number,
 }
 class Floor extends React.Component<propsFloor> {
     height: number = (this.props.floorNumber) * 117;
@@ -22,7 +22,7 @@ class Floor extends React.Component<propsFloor> {
     }
 
     handelClick() : void {
-        this.setTimer(this.props.elevators.orderFasterElevator(this.props.floorNumber));
+        this.setTimer(this.props.orderElevator());
     }
     render(): React.ReactNode {
         return(

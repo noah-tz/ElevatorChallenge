@@ -9,7 +9,7 @@ interface Settings {
 };
 
 const settings: Settings = {
-    numOfFloors: 2000,
+    numOfFloors: 8,
     numOfElevators: 3,
     numOfBuildings: 2,
     floorsPerSecond: 2, 
