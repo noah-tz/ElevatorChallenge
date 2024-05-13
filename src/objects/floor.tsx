@@ -31,8 +31,7 @@ class Floor extends React.Component<propsFloor> {
                 >
                 <Styles.metalLinear
                     onClick={() => this.handelClick()}
-                    isOrdered={Boolean(this.timer)}
-                    id={`ButtonOfNumberBuilding ${this.props.buildingNumber} numberFloor ${this.props.floorNumber}`}
+                    id={`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`}
                 >
                     {this.props.floorNumber}
                 </Styles.metalLinear>

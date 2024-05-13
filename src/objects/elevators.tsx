@@ -27,29 +27,33 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
         }
     }
 
-    addOrder(numberFloor: number): void{
-        this.orders.push(numberFloor);
+    addOrder(floorNumber: number): void{
+        this.orders.push(floorNumber);
+        const buttonElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`);
+        buttonElement!.style.color = 'green';
         if (this.orders.length === 1) {
             this.moveToNextFloor(this.orders[0]);
         }
     }
     
-    private moveToNextFloor(numberFloor: number): void {
-        const element = document.getElementById(`buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`)
-        const secondMove = Math.abs(this.currentFloor - numberFloor) / 2;
-        element!.style.transition = `${secondMove}s`;
-        element!.style.marginBottom = `${(numberFloor -1) * 117}px`;
-        this.currentFloor = numberFloor;        
-        this.arrivalToFloor(secondMove);
+    private moveToNextFloor(floorNumber: number): void {
+        const elevatorElement = document.getElementById(`buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`)
+        const secondMove = Math.abs(this.currentFloor - floorNumber) / 2;
+        elevatorElement!.style.transition = `${secondMove}s`;
+        elevatorElement!.style.marginBottom = `${(floorNumber -1) * 117}px`;
+        this.currentFloor = floorNumber;        
+        this.arrivalToFloor(secondMove, floorNumber);
     }
 
     
-    private async arrivalToFloor(standbySeconds: number) {
+    private async arrivalToFloor(standbySeconds: number, floorNumber: number) {
         setTimeout(async () => {
-            // const dingAudio = new Audio('../ding.mp3');
-            // dingAudio.play();
-            this.orders.splice(0, 1);
+            const dingAudio = new Audio('./ding.mp3');
+            dingAudio.play();
+            const buttonElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`);
+            buttonElement!.style.color = 'black';
             await sleep(2);
+            this.orders.splice(0, 1);
             if (this.orders.length > 0) {
                 this.moveToNextFloor(this.orders[0]);        
             }
