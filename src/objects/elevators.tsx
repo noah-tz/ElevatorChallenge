@@ -18,15 +18,8 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     orders: number[] = [];
     timerWaiting: number = 0;
     isMoved: boolean = false;
-    currentFloor: number = 0;
+    currentFloor: number = 1;
     height: number = 0;
-
-    constructor(props: propsElevator){
-        super(props);
-        this.state = {
-            height: 0
-        }
-    }
 
     addOrder(floorNumber: number): void{
         this.orders.push(floorNumber);
@@ -42,7 +35,8 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
         const secondMove = Math.abs(this.currentFloor - floorNumber) / settings.floorsPerSecond;
         elevatorElement!.style.transition = `${secondMove}s`;
         elevatorElement!.style.marginBottom = `${(floorNumber -1) * 116}px`;
-        this.currentFloor = floorNumber;        
+        this.currentFloor = floorNumber;
+        this.orders.splice(0, 1);
         this.arrivalToFloor(secondMove, floorNumber);
     }
 
@@ -54,7 +48,6 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
             const buttonElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`);
             buttonElement!.style.color = 'black';
             await sleep(2);
-            this.orders.splice(0, 1);
             if (this.orders.length > 0) {
                 this.moveToNextFloor(this.orders[0]);        
             }
@@ -63,15 +56,16 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     
    
     getSecondsOrder(newOrder: number): number{
-        function getSecondsForSingleOrder(previousLocation: number, newOrder: number): number{
-            return Math.abs(previousLocation - newOrder * 116) / 116 * 0.5;
+        function getSecondsForSingleOrder(previousFloor: number, newFloor: number): number{
+            return Math.abs(previousFloor - newFloor) / settings.floorsPerSecond;
         }
-        if(!this.orders){
-            return getSecondsForSingleOrder(this.state.height, newOrder) + this.timerWaiting;
+        if(!this.orders.length){
+            console.log(this.props.elevatorNumber, this.currentFloor, newOrder, this.timerWaiting, getSecondsForSingleOrder(this.currentFloor, newOrder) + this.timerWaiting)
+            return getSecondsForSingleOrder(this.currentFloor, newOrder) + this.timerWaiting;
         }
-        let seconds = getSecondsForSingleOrder(this.state.height, this.orders[0]) + this.timerWaiting +2;
+        let seconds = getSecondsForSingleOrder(this.currentFloor, this.orders[0]) + this.timerWaiting;
         for (let idxOrder = 1; idxOrder < this.orders.length; idxOrder++){
-            seconds += getSecondsForSingleOrder(this.orders[idxOrder -1] *117, this.orders[idxOrder]) +2;
+            seconds += getSecondsForSingleOrder(this.orders[idxOrder -1], this.orders[idxOrder]) +2;
         }
         return seconds;
     }
@@ -112,7 +106,6 @@ class Elevators extends React.Component<elevatorProps> {
         let timeElevatorFaster = Infinity;
         for (let elevatorNumber of Object.keys(this.elevators)){
             let timeElevator = this.elevators[Number(elevatorNumber)].getSecondsOrder(numberFloor);
-            console.log(timeElevator, elevatorNumber)
             if (timeElevator < timeElevatorFaster) {
                 elevatorFaster = elevatorNumber;
                 timeElevatorFaster = timeElevator;
