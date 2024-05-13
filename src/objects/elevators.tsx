@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
+const audio = require('./ding.mp3')
 const elevatorImage = require('./elv.png');
 
 const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay *1000))
@@ -48,7 +49,7 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     
     private async arrivalToFloor(standbySeconds: number, floorNumber: number) {
         setTimeout(async () => {
-            const dingAudio = new Audio('./ding.mp3');
+            const dingAudio = new Audio(audio);
             dingAudio.play();
             const buttonElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`);
             buttonElement!.style.color = 'black';
