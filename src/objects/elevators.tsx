@@ -39,9 +39,9 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     
     private moveToNextFloor(floorNumber: number): void {
         const elevatorElement = document.getElementById(`buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`)
-        const secondMove = Math.abs(this.currentFloor - floorNumber) / 2;
+        const secondMove = Math.abs(this.currentFloor - floorNumber) / settings.floorsPerSecond;
         elevatorElement!.style.transition = `${secondMove}s`;
-        elevatorElement!.style.marginBottom = `${(floorNumber -1) * 117}px`;
+        elevatorElement!.style.marginBottom = `${(floorNumber -1) * 116}px`;
         this.currentFloor = floorNumber;        
         this.arrivalToFloor(secondMove, floorNumber);
     }
@@ -64,7 +64,7 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
    
     getSecondsOrder(newOrder: number): number{
         function getSecondsForSingleOrder(previousLocation: number, newOrder: number): number{
-            return Math.abs(previousLocation - newOrder * 117) / 117 * 0.5;
+            return Math.abs(previousLocation - newOrder * 116) / 116 * 0.5;
         }
         if(!this.orders){
             return getSecondsForSingleOrder(this.state.height, newOrder) + this.timerWaiting;
