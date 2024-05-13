@@ -6,14 +6,16 @@ interface Settings {
     numOfBuildings: number;
     floorsPerSecond: number;
     minHeightBuilding: string;
+    floorHeight: number;
 };
 
 const settings: Settings = {
-    numOfFloors: 100,
-    numOfElevators: 1,
-    numOfBuildings: 1,
+    numOfFloors: 8,
+    numOfElevators: 4,
+    numOfBuildings: 2,
     floorsPerSecond: 2, 
-    minHeightBuilding: '96vh'
+    minHeightBuilding: '96vh',
+    floorHeight: 116.6666666
 };
 
 export default settings;

@@ -22,6 +22,11 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     currentFloor: number = 1;
     height: number = 0;
 
+    constructor(props: any){
+        super(props);
+        this.timerWaiting.startTimer()
+    }
+
     addOrder(floorNumber: number): void{
         this.orders.push(floorNumber);
         const buttonElement: HTMLElement | null = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`);
@@ -35,7 +40,7 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
         const elevatorElement: HTMLElement | null = document.getElementById(`buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`)
         const secondMove: number = Math.abs(this.currentFloor - floorNumber) / settings.floorsPerSecond;
         elevatorElement!.style.transition = `${secondMove}s`;
-        elevatorElement!.style.marginBottom = `${(floorNumber -1) * 116}px`;
+        elevatorElement!.style.marginBottom = `${(floorNumber -1) * settings.floorHeight}px`;
         this.currentFloor = floorNumber;
         this.orders.splice(0, 1);
         this.arrivalToFloor(secondMove, floorNumber);
@@ -114,7 +119,7 @@ class Elevators extends React.Component<elevatorProps> {
             }
         }
         this.elevators[elevatorFaster].addOrder(numberFloor);
-        return Number(timeElevatorFaster);
+        return timeElevatorFaster;
     }
 
     render(): React.ReactNode {

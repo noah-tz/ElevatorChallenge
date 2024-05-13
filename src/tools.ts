@@ -14,7 +14,6 @@ export class Timer {
 
     getSecondsLeft(): number{
         const timePassed = Date.now() - this.startTime;
-        console.log('aaabbb', timePassed);
         const timeLeft = this.timerLength - timePassed;
         return Math.max(timeLeft / 1000, 0);
     }
