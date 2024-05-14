@@ -17,30 +17,33 @@ interface StateElevator {
 class Elevator extends React.Component<propsElevator, StateElevator>{
     revers: number = 1;
     orders: number[] = [];
-    timerWaiting = new Timer(0);
+    timerWaiting = new Timer();
     isMoved: boolean = false;
     currentFloor: number = 1;
     height: number = 0;
+    keyElevator: string = `buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`;
 
     constructor(props: any){
         super(props);
-        this.timerWaiting.startTimer()
     }
 
     addOrder(floorNumber: number): void{
         this.orders.push(floorNumber);
-        const buttonElement: HTMLElement | null = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`);
-        buttonElement!.style.color = 'green';
-        if (this.orders.length === 1 && !this.timerWaiting.getSecondsLeft()) {
+        const buttonElement: HTMLElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`)!;
+        buttonElement.style.color = 'green';
+        if (
+            this.orders.length === 1 &&
+            !this.timerWaiting.getSecondsLeft()
+        ) {
             this.moveToNextFloor(this.orders[0]);
         }
     }
     
     private moveToNextFloor(floorNumber: number): void {
-        const elevatorElement: HTMLElement | null = document.getElementById(`buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`)
+        const elevatorElement: HTMLElement = document.getElementById(this.keyElevator)!
         const secondMove: number = Math.abs(this.currentFloor - floorNumber) / settings.floorsPerSecond;
-        elevatorElement!.style.transition = `${secondMove}s`;
-        elevatorElement!.style.marginBottom = `${(floorNumber -1) * settings.floorHeight}px`;
+        elevatorElement.style.transition = `${secondMove}s`;
+        elevatorElement.style.marginBottom = `${(floorNumber -1) * settings.floorHeight}px`;
         this.currentFloor = floorNumber;
         this.orders.splice(0, 1);
         this.arrivalToFloor(secondMove, floorNumber);
@@ -48,8 +51,7 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
 
     
     private async arrivalToFloor(standbySeconds: number, floorNumber: number) {
-        this.timerWaiting = new Timer(standbySeconds +2);
-        this.timerWaiting.startTimer();
+        this.timerWaiting.startTimer(standbySeconds +2);
         setTimeout(async () => {
             const dingAudio = new Audio(audio);
             dingAudio.play();

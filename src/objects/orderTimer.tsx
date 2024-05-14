@@ -11,7 +11,7 @@ interface stateTimer {
     timeLeft: number;
 }
 class DisplayTimer extends React.Component<propsTimer, stateTimer>{
-    timer: Timer;
+    timer: Timer = new Timer();;
     decimalSecond: number;
     timeLeft: number;
     keySelfElement: string = `timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`;
@@ -27,8 +27,7 @@ class DisplayTimer extends React.Component<propsTimer, stateTimer>{
     start(seconds: number): void {
         this.decimalSecond = seconds - Math.floor(seconds);
         this.timeLeft = seconds;
-        this.timer = new Timer(seconds);
-        this.timer.startTimer();
+        this.timer.startTimer(seconds);
         this.reduceDecimalSeconds();
     }
 

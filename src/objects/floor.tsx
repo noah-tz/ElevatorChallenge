@@ -22,7 +22,9 @@ class Floor extends React.Component<propsFloor> {
     }
 
     handelClick() : void {
-        this.setTimer(this.props.orderElevator());
+        if (document.getElementById(`timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`)!.innerText === '') {
+            this.setTimer(this.props.orderElevator());
+        }
     }
     render(): React.ReactNode {
         return(
