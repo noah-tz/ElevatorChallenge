@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styles from '../stylesFiles/floors.style.ts';
 import settings from '../settings.ts';
-import Elevators from './elevators.tsx';
+import DisplayTimer from './orderTimer.tsx';
 
 interface propsFloor {
     floorNumber: number,
@@ -10,14 +10,14 @@ interface propsFloor {
 }
 class Floor extends React.Component<propsFloor> {
     height: number = (this.props.floorNumber) * 117;
-    timer: NodeJS.Timeout | null = null;
+    timer: DisplayTimer = new DisplayTimer({
+        buildingNumber: this.props.buildingNumber,
+        floorNumber: this.props.floorNumber
+    });
 
     private setTimer(seconds: number): void {
         if (seconds > 0) {
-            this.timer = setTimeout(() => {
-                this.timer = null;
-                this.forceUpdate();
-            }, seconds * 1000);
+            this.timer.start(seconds);
         }
     }
 
@@ -35,6 +35,7 @@ class Floor extends React.Component<propsFloor> {
                 >
                     {this.props.floorNumber}
                 </Styles.metalLinear>
+                {this.timer.render()}
             </Styles.Floor>
         )
     }
