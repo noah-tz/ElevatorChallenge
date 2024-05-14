@@ -3,8 +3,8 @@ import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
 import {Timer, sleep} from '../tools.ts' 
 
-const audio: string = require('./ding.mp3')
-const elevatorImage: string = require('./elv.png');
+const audio: string = require('../media/ding.mp3')
+const elevatorImage: string = require('../media/elv.png');
 
 
 interface propsElevator{
