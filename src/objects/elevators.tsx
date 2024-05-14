@@ -28,7 +28,9 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
     }
 
     addOrder(floorNumber: number): void{
+        // console.log(this.orders)
         this.orders.push(floorNumber);
+        // console.log(this.orders)
         const buttonElement: HTMLElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`)!;
         buttonElement.style.color = 'green';
         if (
@@ -72,11 +74,14 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
         if(!this.orders.length){
             return getSecondsForSingleOrder(this.currentFloor, newOrder) + this.timerWaiting.getSecondsLeft();
         }
-        let seconds = getSecondsForSingleOrder(this.currentFloor, this.orders[0]) + this.timerWaiting.getSecondsLeft();
+        const secondsBeforeList: number = getSecondsForSingleOrder(this.currentFloor, this.orders[0]) + this.timerWaiting.getSecondsLeft();
+        let secondsList: number = 0;
         for (let idxOrder = 1; idxOrder < this.orders.length; idxOrder++){
-            seconds += getSecondsForSingleOrder(this.orders[idxOrder -1], this.orders[idxOrder]) +2;
+            secondsList += getSecondsForSingleOrder(this.orders[idxOrder -1], this.orders[idxOrder]) +2;
         }
-        return seconds;
+        const secondsLastOrder: number = getSecondsForSingleOrder(this.orders[this.orders.length -1], newOrder) +2;
+        console.log('aaabbb',secondsBeforeList, secondsList, secondsLastOrder, this.orders, newOrder, this.timerWaiting.getSecondsLeft());
+        return secondsBeforeList + secondsList + secondsLastOrder;
     }
 
     render(): React.ReactNode {

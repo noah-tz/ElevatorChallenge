@@ -10,12 +10,12 @@ interface Settings {
 };
 
 const settings: Settings = {
-    numOfFloors: 8,
+    numOfFloors: 9,
     numOfElevators: 4,
-    numOfBuildings: 2,
+    numOfBuildings: 1,
     floorsPerSecond: 2, 
     minHeightBuilding: '96vh',
-    floorHeight: 116.6666666
+    floorHeight: 116 + (1/3)*2
 };
 
 export default settings;
