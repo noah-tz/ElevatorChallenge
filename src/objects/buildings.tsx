@@ -10,18 +10,13 @@ class Buildings extends React.Component {
     
     renderBuilding(buildingNumber: number): React.ReactNode {
         this.elevatorSystems[buildingNumber] = new Elevators({buildingNumber: buildingNumber});
-        const floors = FloorFactory.createFloors(buildingNumber, this.elevatorSystems[buildingNumber])
-        // const floors = FloorFactory.createFloors(buildingNumber, this.elevatorSystems[buildingNumber].orderFasterElevator)
+        const floors: React.ReactNode = FloorFactory.createFloors(buildingNumber, this.elevatorSystems[buildingNumber])
         return(
             <Styles.Building>
                 {floors}
                 {this.elevatorSystems[buildingNumber].render()}
             </Styles.Building>
         )
-    }
-
-    orderElevator(floorNumber: number, buildingNumber: number): number{
-        return this.elevatorSystems[buildingNumber].orderFasterElevator(floorNumber);
     }
 
     render(): React.ReactNode {

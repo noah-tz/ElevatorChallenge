@@ -10,23 +10,21 @@ interface propsFloor {
     orderElevator: () => number,
 }
 class Floor extends React.Component<propsFloor> {
-    height: number = (this.props.floorNumber) * 117;
-    timer: DisplayTimer = new DisplayTimer({
+    private timer: DisplayTimer = new DisplayTimer({
         buildingNumber: this.props.buildingNumber,
         floorNumber: this.props.floorNumber
     });
-
-    private setTimer(seconds: number): void {
-        if (seconds > 0) {
+    
+    handelClick() : void {
+        const seconds: number = this.props.orderElevator();
+        if (
+            document.getElementById(`timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`)!.innerText === '' &&
+            seconds > 0
+        ) {
             this.timer.start(seconds);
         }
     }
 
-    handelClick() : void {
-        if (document.getElementById(`timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`)!.innerText === '') {
-            this.setTimer(this.props.orderElevator());
-        }
-    }
     render(): React.ReactNode {
         return(
             <Styles.Floor
@@ -51,32 +49,27 @@ class FloorFactory {
         buildingNumber: number,
         floorNumber: number,
         elevators: Elevators,
-        // orderElevator: (floorNumber: number) => number,
     ): React.ReactNode {
         return(
             <Floor
                 buildingNumber={buildingNumber}
                 floorNumber={floorNumber}
                 orderElevator={ () => elevators.orderFasterElevator(floorNumber)} />
-                // orderElevator={ () => orderElevator(floorNumber)} />
         );
     }
 
     static createFloors(
         buildingNumber: number,
         elevators: Elevators,
-        // orderElevator: (floorNumber: number) => number,
     ): React.ReactNode {
         return (
             <Styles.Floors>
                 {Array(settings.numOfFloors).fill(null).map((_, idx) => (
                     FloorFactory.createFloorComponent(buildingNumber, idx + 1, elevators)
-                    // FloorFactory.createFloorComponent(buildingNumber, idx + 1, orderElevator)
                 ))}
             </Styles.Floors>
         );
     }
-
 }
 
 export default FloorFactory;

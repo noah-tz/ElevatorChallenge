@@ -11,26 +11,14 @@ interface propsElevator{
     buildingNumber: number;
     elevatorNumber: number;
 }
-interface StateElevator {
-    height: number;
-}
-class Elevator extends React.Component<propsElevator, StateElevator>{
-    revers: number = 1;
-    orders: number[] = [];
-    timerWaiting = new Timer();
-    isMoved: boolean = false;
-    currentFloor: number = 1;
-    height: number = 0;
-    keyElevator: string = `buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`;
-
-    constructor(props: any){
-        super(props);
-    }
+class Elevator extends React.Component<propsElevator>{
+    private orders: number[] = [];
+    private timerWaiting = new Timer();
+    private currentFloor: number = 1;
+    private keyElevator: string = `buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`;
 
     addOrder(floorNumber: number): void{
-        // console.log(this.orders)
         this.orders.push(floorNumber);
-        // console.log(this.orders)
         const buttonElement: HTMLElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`)!;
         buttonElement.style.color = 'green';
         if (
@@ -57,8 +45,8 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
         setTimeout(async () => {
             const dingAudio = new Audio(audio);
             dingAudio.play();
-            const buttonElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`);
-            buttonElement!.style.color = 'black';
+            const buttonElement: HTMLElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`)!;
+            buttonElement.style.color = 'black';
             await sleep(2);
             if (this.orders.length > 0) {
                 this.moveToNextFloor(this.orders[0]);        
@@ -76,11 +64,10 @@ class Elevator extends React.Component<propsElevator, StateElevator>{
         }
         const secondsBeforeList: number = getSecondsForSingleOrder(this.currentFloor, this.orders[0]) + this.timerWaiting.getSecondsLeft();
         let secondsList: number = 0;
-        for (let idxOrder = 1; idxOrder < this.orders.length; idxOrder++){
+        for (let idxOrder: number = 1; idxOrder < this.orders.length; idxOrder++){
             secondsList += getSecondsForSingleOrder(this.orders[idxOrder -1], this.orders[idxOrder]) +2;
         }
         const secondsLastOrder: number = getSecondsForSingleOrder(this.orders[this.orders.length -1], newOrder) +2;
-        console.log('aaabbb',secondsBeforeList, secondsList, secondsLastOrder, this.orders, newOrder, this.timerWaiting.getSecondsLeft());
         return secondsBeforeList + secondsList + secondsLastOrder;
     }
 
@@ -99,7 +86,7 @@ interface elevatorProps {
     buildingNumber: number
 }
 class Elevators extends React.Component<elevatorProps> {
-    elevators: Record<number, Elevator> = {};
+    private elevators: Record<number, Elevator> = {};
 
     constructor(props: any){
         super(props);
@@ -107,7 +94,7 @@ class Elevators extends React.Component<elevatorProps> {
     }
 
     createElevators(): void {
-        for (let elevatorNumber = 1; elevatorNumber <= settings.numOfElevators; elevatorNumber++) {
+        for (let elevatorNumber: number = 1; elevatorNumber <= settings.numOfElevators; elevatorNumber++) {
             this.elevators[elevatorNumber] = new Elevator({
                 elevatorNumber: elevatorNumber,
                 buildingNumber: this.props.buildingNumber

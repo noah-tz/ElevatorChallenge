@@ -5,7 +5,6 @@ export const Floors = styled.div`
     flex-direction: column-reverse;
 `
 
-
 export const Floor = styled.div<{isLastFloor: boolean}>`
     display: flex;
     align-items: center;

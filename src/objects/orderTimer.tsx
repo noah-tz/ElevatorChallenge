@@ -7,15 +7,12 @@ interface propsTimer {
     buildingNumber: number;
     floorNumber: number;
 }
-interface stateTimer {
-    timeLeft: number;
-}
-class DisplayTimer extends React.Component<propsTimer, stateTimer>{
-    timer: Timer = new Timer();;
-    decimalSecond: number;
-    timeLeft: number;
-    keySelfElement: string = `timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`;
-    selfElement: HTMLElement;
+class DisplayTimer extends React.Component<propsTimer>{
+    private timer: Timer = new Timer();
+    private decimalSecond: number;
+    private timeLeft: number;
+    private keySelfElement: string = `timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`;
+    private selfElement: HTMLElement;
 
     private setTextTimer(text: string): void{
         if (!this.selfElement) {
@@ -44,7 +41,7 @@ class DisplayTimer extends React.Component<propsTimer, stateTimer>{
     }
 
     private reduceWholeSeconds(): void {
-        const intervalId = setInterval(async () => {
+        const intervalId: NodeJS.Timeout = setInterval(async () => {
             const secondsLeft: number = this.timer.getSecondsLeft();
             this.timeLeft = this.timer.getSecondsLeft();
             this.setTextTimer(roundToNearestHalf(this.timeLeft).toString());
