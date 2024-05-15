@@ -2,6 +2,7 @@ import React from 'react';
 import * as Styles from '../stylesFiles/floors.style.ts';
 import settings from '../settings.ts';
 import DisplayTimer from './orderTimer.tsx';
+import Elevators from './elevators.tsx';
 
 interface propsFloor {
     floorNumber: number,
@@ -43,4 +44,39 @@ class Floor extends React.Component<propsFloor> {
     }
 }
 
-export default Floor
+
+
+class FloorFactory {
+    private static createFloorComponent(
+        buildingNumber: number,
+        floorNumber: number,
+        elevators: Elevators,
+        // orderElevator: (floorNumber: number) => number,
+    ): React.ReactNode {
+        return(
+            <Floor
+                buildingNumber={buildingNumber}
+                floorNumber={floorNumber}
+                orderElevator={ () => elevators.orderFasterElevator(floorNumber)} />
+                // orderElevator={ () => orderElevator(floorNumber)} />
+        );
+    }
+
+    static createFloors(
+        buildingNumber: number,
+        elevators: Elevators,
+        // orderElevator: (floorNumber: number) => number,
+    ): React.ReactNode {
+        return (
+            <Styles.Floors>
+                {Array(settings.numOfFloors).fill(null).map((_, idx) => (
+                    FloorFactory.createFloorComponent(buildingNumber, idx + 1, elevators)
+                    // FloorFactory.createFloorComponent(buildingNumber, idx + 1, orderElevator)
+                ))}
+            </Styles.Floors>
+        );
+    }
+
+}
+
+export default FloorFactory;

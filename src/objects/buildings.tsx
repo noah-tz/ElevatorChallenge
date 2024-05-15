@@ -1,5 +1,5 @@
 import React from 'react';
-import Floor from './floor.tsx';
+import FloorFactory from './floor.tsx';
 import Elevators from './elevators.tsx';
 import * as Styles from '../stylesFiles/buildings.styles.ts'
 import settings from '../settings.ts';
@@ -8,31 +8,19 @@ import settings from '../settings.ts';
 class Buildings extends React.Component {
     elevatorSystems: Record<number, Elevators> = {};
     
-    private renderFloors(buildingNumber: number): React.ReactNode {
-        return(
-            <Styles.Floors>
-                {Array(settings.numOfFloors).fill(null).map((_, idx) => (
-                    <Floor
-                        buildingNumber={buildingNumber}    
-                        floorNumber={idx +1}
-                        orderElevator={() => this.orderElevator(idx +1, buildingNumber)}
-                    />
-                ))}
-            </Styles.Floors>
-        )
-    }
-    
     renderBuilding(buildingNumber: number): React.ReactNode {
         this.elevatorSystems[buildingNumber] = new Elevators({buildingNumber: buildingNumber});
+        const floors = FloorFactory.createFloors(buildingNumber, this.elevatorSystems[buildingNumber])
+        // const floors = FloorFactory.createFloors(buildingNumber, this.elevatorSystems[buildingNumber].orderFasterElevator)
         return(
             <Styles.Building>
-                {this.renderFloors(buildingNumber)}
+                {floors}
                 {this.elevatorSystems[buildingNumber].render()}
             </Styles.Building>
         )
     }
 
-    orderElevator(floorNumber: number, buildingNumber): number{
+    orderElevator(floorNumber: number, buildingNumber: number): number{
         return this.elevatorSystems[buildingNumber].orderFasterElevator(floorNumber);
     }
 
