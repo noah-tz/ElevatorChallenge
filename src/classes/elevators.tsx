@@ -6,7 +6,59 @@ import { Timer, getSecondsForSingleOrder, sleep } from '../tools.ts'
 const audio: string = require('../media/ding.mp3')
 const elevatorImage: string = require('../media/elv.png');
 
+// Class 'Elevators' represents a system of elevators (of one building)
+interface elevatorProps {
+    buildingNumber: number;
+    numberOfElevators: number;
+}
+class Elevators extends React.Component<elevatorProps> {
+    private elevators: Record<number, Elevator> = {};
 
+    constructor(props: any){
+        super(props);
+        this.createElevators();
+    }
+
+    createElevators(): void {
+        for (let elevatorNumber: number = 1; elevatorNumber <= this.props.numberOfElevators; elevatorNumber++) {
+            this.elevators[elevatorNumber] = new Elevator({
+                elevatorNumber: elevatorNumber,
+                buildingNumber: this.props.buildingNumber
+            });
+        }        
+    }
+
+    // Finds the fast elevator in the building and orders it
+    orderFasterElevator(numberFloor: number): number {
+        let elevatorFaster: string = '1';
+        let timeElevatorFaster: number = Infinity;
+        for (let elevatorNumber of Object.keys(this.elevators)){
+            let timeElevator: number = this.elevators[Number(elevatorNumber)].getSecondsOrder(numberFloor);
+            if (timeElevator < timeElevatorFaster) {
+                elevatorFaster = elevatorNumber;
+                timeElevatorFaster = timeElevator;
+            }
+        }
+        this.elevators[elevatorFaster].addOrder(numberFloor);
+        return timeElevatorFaster;
+    }
+
+    render(): React.ReactNode {
+        return(
+            <>
+            {Object.keys(this.elevators).map((elevatorNumber, idx) => (
+                <div key={idx +1}>
+                    {this.elevators[elevatorNumber].render()}
+                </div>
+            ))}
+            </>
+        )
+    }
+}
+
+
+
+// Class Elevator' elevator performance (one)
 interface propsElevator{
     buildingNumber: number;
     elevatorNumber: number;
@@ -17,6 +69,7 @@ class Elevator extends React.Component<propsElevator>{
     private currentFloor: number = 1;
     private keyElevator: string = `buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`;
 
+    // Adds an order to the order queue
     addOrder(floorNumber: number): void{
         this.orders.push(floorNumber);
         const buttonElement: HTMLElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`)!;
@@ -54,7 +107,8 @@ class Elevator extends React.Component<propsElevator>{
         }, standbySeconds * 1000);
     }
     
-   
+    // Returns the given time for the elevator to arrive for a requested order
+    // (taking into account previous orders)
     getSecondsOrder(newOrder: number): number{
         if(!this.orders.length){
             return getSecondsForSingleOrder(this.currentFloor, newOrder) + this.timerWaiting.getSecondsLeft();
@@ -75,54 +129,6 @@ class Elevator extends React.Component<propsElevator>{
                 src={elevatorImage}
                 alt={`Elevator number ${this.props.elevatorNumber}`}
             />
-        )
-    }
-}
-
-interface elevatorProps {
-    buildingNumber: number;
-    numberOfElevators: number;
-}
-class Elevators extends React.Component<elevatorProps> {
-    private elevators: Record<number, Elevator> = {};
-
-    constructor(props: any){
-        super(props);
-        this.createElevators();
-    }
-
-    createElevators(): void {
-        for (let elevatorNumber: number = 1; elevatorNumber <= this.props.numberOfElevators; elevatorNumber++) {
-            this.elevators[elevatorNumber] = new Elevator({
-                elevatorNumber: elevatorNumber,
-                buildingNumber: this.props.buildingNumber
-            });
-        }        
-    }
-
-    orderFasterElevator(numberFloor: number): number {
-        let elevatorFaster: string = '1';
-        let timeElevatorFaster: number = Infinity;
-        for (let elevatorNumber of Object.keys(this.elevators)){
-            let timeElevator: number = this.elevators[Number(elevatorNumber)].getSecondsOrder(numberFloor);
-            if (timeElevator < timeElevatorFaster) {
-                elevatorFaster = elevatorNumber;
-                timeElevatorFaster = timeElevator;
-            }
-        }
-        this.elevators[elevatorFaster].addOrder(numberFloor);
-        return timeElevatorFaster;
-    }
-
-    render(): React.ReactNode {
-        return(
-            <>
-            {Object.keys(this.elevators).map((elevatorNumber, idx) => (
-                <div key={idx +1}>
-                    {this.elevators[elevatorNumber].render()}
-                </div>
-            ))}
-            </>
         )
     }
 }

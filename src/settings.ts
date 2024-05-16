@@ -6,9 +6,8 @@ interface Settings {
     minHeightBuilding: string;
     floorHeight: number;
 };
-
 const settings: Settings = {
-    buildings: [[7, 3], [12, 2]],
+    buildings: [[7, 3], [12, 2]], // [[numberOfFloors, numberOfElevators] ...]
     floorsPerSecond: 2,
     minHeightBuilding: '96vh',
     floorHeight: 117

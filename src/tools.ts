@@ -1,9 +1,11 @@
 import settings from './settings.ts';
 
+// The Timer class represents a timer with the ability to know how much time is left
 export class Timer {
   private timerLength: number;
   private startTime: number;
-    
+  
+
   startTimer(seconds: number): void{
     this.timerLength = seconds * 1000;
     this.startTime = Date.now();
@@ -29,6 +31,7 @@ export const roundToNearestHalf = (number: number): number => {
   }
 }
 
+// Displays the elevator travel time between two given floors
 export const getSecondsForSingleOrder = (previousFloor: number, newFloor: number): number => {
   return Math.abs(previousFloor - newFloor) / settings.floorsPerSecond;
 }

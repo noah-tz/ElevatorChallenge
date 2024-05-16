@@ -6,8 +6,9 @@ import settings from '../settings.ts';
 
 
 class Buildings extends React.Component {
-    elevatorSystems: Record<number, Elevators> = {};
-    
+    elevatorSystems: Record<number, Elevators> = {}; // The elevator systems of each building
+
+    // render each building for 'Buildings'    
     renderBuilding(numberOfFloors: number, numberOfElevators: number, buildingNumber: number): React.ReactNode {
         this.elevatorSystems[buildingNumber] = new Elevators({buildingNumber: buildingNumber, numberOfElevators: numberOfElevators});
         const floors: React.ReactNode = FloorFactory.createFloors(

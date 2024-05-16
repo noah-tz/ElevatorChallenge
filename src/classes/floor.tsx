@@ -4,6 +4,7 @@ import settings from '../settings.ts';
 import DisplayTimer from './orderTimer.tsx';
 import Elevators from './elevators.tsx';
 
+// Class 'Floor' representing each floor in building
 interface propsFloor {
     floorNumber: number,
     isLastFloor: boolean,
@@ -16,6 +17,7 @@ class Floor extends React.Component<propsFloor> {
         floorNumber: this.props.floorNumber
     });
     
+    // Handles the elevator booking
     handelClick() : void {
         if (
             document.getElementById(`timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`)!.innerText === ''
@@ -45,7 +47,8 @@ class Floor extends React.Component<propsFloor> {
 }
 
 
-
+// Produces multiple floors upon request.
+// The use is through the function 'createFloors' (static function)
 class FloorFactory {
     private static createFloorComponent(
         buildingNumber: number,
@@ -62,6 +65,9 @@ class FloorFactory {
         );
     }
 
+    // Produces multiple floors upon request.
+    // Gets the building number, number of floors
+    // and elevator system (so that the floor controller can order an elevator)
     static createFloors(
         buildingNumber: number,
         numberOfFloors: number,
