@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
-import {Timer, sleep} from '../tools.ts' 
+import {Timer, getSecondsForSingleOrder, sleep} from '../tools.ts' 
 
 const audio: string = require('../media/ding.mp3')
 const elevatorImage: string = require('../media/elv.png');
@@ -56,9 +56,6 @@ class Elevator extends React.Component<propsElevator>{
     
    
     getSecondsOrder(newOrder: number): number{
-        function getSecondsForSingleOrder(previousFloor: number, newFloor: number): number{
-            return Math.abs(previousFloor - newFloor) / settings.floorsPerSecond;
-        }
         if(!this.orders.length){
             return getSecondsForSingleOrder(this.currentFloor, newOrder) + this.timerWaiting.getSecondsLeft();
         }

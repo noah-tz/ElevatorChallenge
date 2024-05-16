@@ -1,4 +1,4 @@
-
+import settings from './settings.ts';
 
 export class Timer {
   private timerLength: number;
@@ -27,6 +27,10 @@ export const roundToNearestHalf = (number: number): number => {
   } else {
     return integerPart + 0.5;
   }
+}
+
+export const getSecondsForSingleOrder = (previousFloor: number, newFloor: number): number => {
+  return Math.abs(previousFloor - newFloor) / settings.floorsPerSecond;
 }
 
 export const sleep = (delay: number): Promise<null> => new Promise((resolve) => setTimeout(resolve, delay *1000))
