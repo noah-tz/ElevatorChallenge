@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
-import {Timer, getSecondsForSingleOrder, sleep} from '../tools.ts' 
+import { Timer, getSecondsForSingleOrder, sleep } from '../tools.ts' 
 
 const audio: string = require('../media/ding.mp3')
 const elevatorImage: string = require('../media/elv.png');
@@ -80,7 +80,8 @@ class Elevator extends React.Component<propsElevator>{
 }
 
 interface elevatorProps {
-    buildingNumber: number
+    buildingNumber: number;
+    numberOfElevators: number;
 }
 class Elevators extends React.Component<elevatorProps> {
     private elevators: Record<number, Elevator> = {};
@@ -91,7 +92,7 @@ class Elevators extends React.Component<elevatorProps> {
     }
 
     createElevators(): void {
-        for (let elevatorNumber: number = 1; elevatorNumber <= settings.numOfElevators; elevatorNumber++) {
+        for (let elevatorNumber: number = 1; elevatorNumber <= this.props.numberOfElevators; elevatorNumber++) {
             this.elevators[elevatorNumber] = new Elevator({
                 elevatorNumber: elevatorNumber,
                 buildingNumber: this.props.buildingNumber

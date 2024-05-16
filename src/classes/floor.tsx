@@ -17,12 +17,13 @@ class Floor extends React.Component<propsFloor> {
     });
     
     handelClick() : void {
-        const seconds: number = this.props.orderElevator();
         if (
-            document.getElementById(`timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`)!.innerText === '' &&
-            seconds > 0
+            document.getElementById(`timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`)!.innerText === ''
         ) {
-            this.timer.start(seconds);
+            const seconds: number = this.props.orderElevator();
+            if (seconds > 0) {
+                this.timer.start(seconds);                
+            }
         }
     }
 

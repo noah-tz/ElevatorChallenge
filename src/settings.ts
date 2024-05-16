@@ -1,16 +1,14 @@
 
 
 interface Settings {
-    buildings: number[];
-    numOfElevators: number;
+    buildings: [number, number][];
     floorsPerSecond: number;
     minHeightBuilding: string;
     floorHeight: number;
 };
 
 const settings: Settings = {
-    buildings: [3, 10, 0, 4],
-    numOfElevators: 3,
+    buildings: [[7, 3], [12, 2]],
     floorsPerSecond: 2,
     minHeightBuilding: '96vh',
     floorHeight: 117
