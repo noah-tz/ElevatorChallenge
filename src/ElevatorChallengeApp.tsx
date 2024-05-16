@@ -1,5 +1,5 @@
 import React from 'react';
-import Buildings from './objects/buildings.tsx';
+import Buildings from './classes/buildings.tsx';
 
 function ElevatorChallenge() {
   return (
