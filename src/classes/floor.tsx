@@ -6,6 +6,7 @@ import Elevators from './elevators.tsx';
 
 interface propsFloor {
     floorNumber: number,
+    isLastFloor: boolean,
     buildingNumber: number,
     orderElevator: () => number,
 }
@@ -28,7 +29,7 @@ class Floor extends React.Component<propsFloor> {
     render(): React.ReactNode {
         return(
             <Styles.Floor
-                isLastFloor={this.props.floorNumber < settings.numOfFloors}
+                isLastFloor={this.props.isLastFloor}
                 >
                 <Styles.metalLinear
                     onClick={() => this.handelClick()}
@@ -48,24 +49,32 @@ class FloorFactory {
     private static createFloorComponent(
         buildingNumber: number,
         floorNumber: number,
+        isLastFloor: boolean,
         elevators: Elevators,
     ): React.ReactNode {
         return(
             <Floor
                 buildingNumber={buildingNumber}
                 floorNumber={floorNumber}
+                isLastFloor={isLastFloor}
                 orderElevator={ () => elevators.orderFasterElevator(floorNumber)} />
         );
     }
 
     static createFloors(
         buildingNumber: number,
+        numberOfFloors: number,
         elevators: Elevators,
     ): React.ReactNode {
         return (
             <Styles.Floors>
-                {Array(settings.numOfFloors).fill(null).map((_, idx) => (
-                    FloorFactory.createFloorComponent(buildingNumber, idx + 1, elevators)
+                {Array(numberOfFloors).fill(null).map((_, idx) => (
+                    FloorFactory.createFloorComponent(
+                        buildingNumber,
+                        idx + 1,
+                        numberOfFloors !== idx+1,
+                        elevators
+                    )
                 ))}
             </Styles.Floors>
         );

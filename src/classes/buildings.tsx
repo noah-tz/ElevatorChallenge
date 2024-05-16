@@ -8,10 +8,15 @@ import settings from '../settings.ts';
 class Buildings extends React.Component {
     elevatorSystems: Record<number, Elevators> = {};
     
-    renderBuilding(buildingNumber: number): React.ReactNode {
+    renderBuilding(numberOfFloors: number, buildingNumber: number): React.ReactNode {
         this.elevatorSystems[buildingNumber] = new Elevators({buildingNumber: buildingNumber});
-        const floors: React.ReactNode = FloorFactory.createFloors(buildingNumber, this.elevatorSystems[buildingNumber])
+        const floors: React.ReactNode = FloorFactory.createFloors(
+            buildingNumber,
+            numberOfFloors,
+            this.elevatorSystems[buildingNumber]
+        )
         return(
+            numberOfFloors > 0 &&
             <Styles.Building>
                 {floors}
                 {this.elevatorSystems[buildingNumber].render()}
@@ -22,8 +27,8 @@ class Buildings extends React.Component {
     render(): React.ReactNode {
         return (
             <Styles.Buildings>
-                {Array(settings.numOfBuildings).fill(null).map((_, idx) => (
-                    this.renderBuilding(idx +1)
+                {settings.buildings.map((numberOfFloors, idx) => (
+                    this.renderBuilding(numberOfFloors, idx +1)
                 ))}
             </Styles.Buildings>
         )
