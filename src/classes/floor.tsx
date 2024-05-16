@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styles from '../stylesFiles/floors.style.ts';
 import settings from '../settings.ts';
-import DisplayTimer from './orderTimer.tsx';
+import DisplayTimer from './displayTimer.tsx';
 import Elevators from './elevators.tsx';
 
 // Class 'Floor' representing each floor in building

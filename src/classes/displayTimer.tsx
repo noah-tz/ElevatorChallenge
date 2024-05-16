@@ -1,6 +1,6 @@
 import React from 'react';
 import { Timer, roundToNearestHalf, sleep } from '../tools.ts';
-import * as Style from '../stylesFiles/orderTimer.styles.ts'
+import * as Style from '../stylesFiles/displayTimer.styles.ts'
 
 
 // DisplayTimer class that displays the waiting time for the elevator.
