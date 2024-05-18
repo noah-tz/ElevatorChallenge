@@ -1,5 +1,5 @@
 import React from 'react';
-import { Timer, roundToNearestHalf, sleep } from '../tools.ts';
+import { Timer, roundToNearestHalf, sleep } from '../utils.ts';
 import * as Style from '../stylesFiles/displayTimer.styles.ts'
 
 

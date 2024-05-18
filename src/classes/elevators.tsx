@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Stiles from '../stylesFiles/elevators.styles.ts';
 import settings from '../settings.ts';
-import { Timer, getSecondsForSingleOrder, sleep } from '../tools.ts' 
+import { Timer, getSecondsForSingleOrder, sleep } from '../utils.ts' 
 
 const audio: string = require('../media/ding.mp3')
 const elevatorImage: string = require('../media/elv.png');
