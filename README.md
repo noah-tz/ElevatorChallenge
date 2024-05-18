@@ -32,7 +32,7 @@ A collection of utility functions used across the project:
 - `Timer` class: Represents a timer with the ability to check the remaining time.
 - `roundToNearestHalf`: Rounds a decimal time value to the nearest half-second.
 - `getSecondsForSingleOrder`: Calculates the time it takes for an elevator to travel directly between two specified floors.
-- `sleep`: Implements a sleep function for introducing delays in the simulation.
+- `sleep`: Implements a sleep function for introducing delays in the project.
 
 
 
@@ -56,7 +56,7 @@ Each elevator maintains a list of pending requests. For a new request, the syste
 
 ### Changes and extensions
 
-A settings file allows configuring parameters such as elevator speed, number of floors, number of elevators per building, and the number of buildings in the simulation.
+A settings file allows configuring parameters such as elevator speed, number of floors, number of elevators per building, and the number of buildings in the project.
 
 ### Installation Instructions
 
@@ -74,4 +74,4 @@ A settings file allows configuring parameters such as elevator speed, number of 
 
 - The project is written in TypeScript for execution.
 - The code is organized following OOP principles and employs a factory pattern for object creation.
-- The settings file allows for customization of simulation parameters.
+- The settings file allows for customization of project parameters.
