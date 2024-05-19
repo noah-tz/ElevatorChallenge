@@ -50,10 +50,9 @@ class DisplayTimer extends React.Component<propsTimer>{
     // Subtracts the seconds part (one by one, without the decimal part)
     private reduceWholeSeconds(): void {
         const intervalId: NodeJS.Timeout = setInterval(async () => {
-            const secondsLeft: number = this.timer.getSecondsLeft();
             this.timeLeft = this.timer.getSecondsLeft();
             this.setTextTimer(roundToNearestHalf(this.timeLeft).toString());
-            if (secondsLeft <= 0.1) {
+            if (this.timeLeft <= 0.1) {
                 this.setTextTimer('0');
                 await sleep(0.5)
                 this.setTextTimer('');
