@@ -5,33 +5,73 @@ import * as Styles from '../stylesFiles/buildings.styles.ts'
 import settings from '../settings.ts';
 
 
-class Buildings extends React.Component {
-    elevatorSystems: Record<number, Elevators> = {}; // The elevator systems of each building
+// Class 'Building' representing each building in buildings
+interface propsBuilding {
+    numberOfFloors: number;
+    numberOfElevators: number;
+    buildingNumber: number;
+}
+class Building extends React.Component<propsBuilding> {
+    private elevatorSystem: Elevators = new Elevators({
+        buildingNumber: this.props.buildingNumber,
+        numberOfElevators: this.props.numberOfElevators
+    })
+    private floors: React.ReactNode = FloorFactory.createFloors(
+        this.props.buildingNumber,
+        this.props.numberOfFloors,
+        this.elevatorSystem
+    )
 
-    // render each building for 'Buildings'    
-    renderBuilding(numberOfFloors: number, numberOfElevators: number, buildingNumber: number): React.ReactNode {
-        this.elevatorSystems[buildingNumber] = new Elevators({buildingNumber: buildingNumber, numberOfElevators: numberOfElevators});
-        const floors: React.ReactNode = FloorFactory.createFloors(
-            buildingNumber,
-            numberOfFloors,
-            this.elevatorSystems[buildingNumber]
-        )
+    render(): React.ReactNode {
         return(
-            numberOfFloors > 0 &&
-            numberOfElevators > 0 &&
+            this.props.numberOfFloors > 0 &&
+            this.props.numberOfElevators > 0 &&
             <Styles.Building>
-                {floors}
-                {this.elevatorSystems[buildingNumber].render()}
+                {this.floors}
+                {this.elevatorSystem.render()}
             </Styles.Building>
         )
     }
+}
 
-    render(): React.ReactNode {
+
+
+// Produces multiple buildings upon 'settings' file parameters.
+// The use is through the function 'createBuildings' (static function)
+class BuildingFactory {
+    private static createBuildingComponent(
+        numberOfFloors: number,
+        numberOfElevators: number,
+        buildingNumber: number,
+    ): React.ReactNode {
+        return(
+            <Building
+                numberOfFloors={numberOfFloors}
+                numberOfElevators={numberOfElevators}
+                buildingNumber={buildingNumber}
+            />
+        );
+    }
+
+    // Produces multiple buildings upon 'settings' file parameters.
+    static createBuildings(): React.ReactNode {
         return (
             <Styles.Buildings>
                 {settings.buildings.map(([numberOfFloors, numberOfElevators], idx) => (
-                    this.renderBuilding(numberOfFloors, numberOfElevators, idx +1)
+                    this.createBuildingComponent(numberOfFloors, numberOfElevators, idx +1)
                 ))}
+            </Styles.Buildings>
+        );
+    }
+}
+
+
+// Class 'Buildings' representing all the buildings
+class Buildings extends React.Component {
+    render(): React.ReactNode {
+        return (
+            <Styles.Buildings>
+                {BuildingFactory.createBuildings()}
             </Styles.Buildings>
         )
     }

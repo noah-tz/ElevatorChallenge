@@ -61,7 +61,8 @@ class FloorFactory {
                 buildingNumber={buildingNumber}
                 floorNumber={floorNumber}
                 isLastFloor={isLastFloor}
-                orderElevator={ () => elevators.orderFasterElevator(floorNumber)} />
+                orderElevator={ () => elevators.orderFasterElevator(floorNumber)}
+            />
         );
     }
 

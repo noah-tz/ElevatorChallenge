@@ -18,10 +18,21 @@ The Elevator Challenge project comprises of several key objects that interact to
 
 `Buildings` class
 - Represents the buildings within the project.
-- Every building holds the floors and the elevator system for that building.
+- holds the buildings, using BuildingFactory.
+
+
+`Building (Factory-Created)` class
+- Represents an individual building within a buildings.
+- holds the floors and the elevator system for that building.
+
+`BuildingFactory` class
+- Produces multiple buildings upon 'settings' file parameters.
+- Provides a static function to return a component containing the created buildings.
 
 `Floor (Factory-Created)` class
 - Represents an individual floor within a building.
+- Holds an elevator order button, calling the elevator system.
+- Displays the calculated arrival time
 
 `FloorFactory` class
 - Generates floors on demand.
@@ -29,6 +40,7 @@ The Elevator Challenge project comprises of several key objects that interact to
 
 `DisplayTimer` class
 - Responsible for displaying a count down by intervals of 1 second, is used for displaying the remaining time until an elevator's arrival on each floor.
+- Activated using the 'start' function
 
 `Elevators` class
 - Represents the elevator system for a single building.
