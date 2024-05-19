@@ -6,14 +6,12 @@
 The Elevator Challenge simulates a multi-elevator system in a high-rise building. Each floor has a call button to request an elevator. The system intelligently selects the fastest available elevator to serve each request. New requests do not affect the wait times of previous reservations.
 
 
-### Description of objects
-
 Each elevator maintains a list of pending requests. For a new request, the system calculates the total time it would take for each elevator to complete its current route and reach the requested floor. The elevator with the shortest calculated time is selected to serve the request.
 
 
 
 
-## Object Descriptions
+## Objects Descriptions
 The Elevator Challenge project comprises of several key objects that interact to implement the elevator system:
 
 `Building (Factory-Created)` class
