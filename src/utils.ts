@@ -18,6 +18,7 @@ export class Timer {
   }
 }
 
+// Round a decimal number to the nearest half
 export const roundToNearestHalf = (number: number): number => {
   const integerPart: number = Math.floor(number);
   const fractionalPart: number = number - integerPart;
@@ -36,4 +37,5 @@ export const getSecondsForSingleOrder = (previousFloor: number, newFloor: number
   return Math.abs(previousFloor - newFloor) / settings.floorsPerSecond;
 }
 
+// Performs a wait of a given number of milliseconds
 export const sleep = (delay: number): Promise<null> => new Promise((resolve) => setTimeout(resolve, delay *1000))

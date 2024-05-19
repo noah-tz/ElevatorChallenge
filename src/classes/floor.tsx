@@ -19,7 +19,7 @@ class Floor extends React.Component<propsFloor> {
         `timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`
     ;
     
-    // Handles the elevator booking
+    // Handles the elevator booking and starts the timer display.
     handelClick() : void {
         if (
             document.getElementById(this.keyTimer)!.innerText === ''

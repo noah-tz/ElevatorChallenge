@@ -71,7 +71,7 @@ class Elevator extends React.Component<propsElevator>{
         `buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`
     ;
 
-    // Adds an order to the order queue
+  // adds an order to the order queue and moves the elevator (if not in motion).
     addOrder(floorNumber: number): void{
         this.orders.push(floorNumber);
         const buttonElement: HTMLElement = document.getElementById(
@@ -97,6 +97,8 @@ class Elevator extends React.Component<propsElevator>{
     }
 
     
+    // Waits for the arrival time and the waiting time on the floor.
+    // paints the button black. if there are pending orders 'moveToNextFloor'.
     private async arrivalToFloor(standbySeconds: number, floorNumber: number) {
         this.timerWaiting.startTimer(standbySeconds +2);
         setTimeout(async () => {
