@@ -6,12 +6,12 @@ export class Timer {
   private startTime: number;
   
 
-  startTimer(seconds: number): void{
+  startTimer(seconds: number): void {
     this.timerLength = seconds * 1000;
     this.startTime = Date.now();
   }
 
-  getSecondsLeft(): number{
+  getSecondsLeft(): number {
     const timePassed: number = Date.now() - this.startTime;
     const timeLeft: number = this.timerLength - timePassed;
     return this.timerLength? Math.max(timeLeft / 1000, 0): 0;

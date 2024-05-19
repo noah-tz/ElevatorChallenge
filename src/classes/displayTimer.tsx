@@ -13,7 +13,9 @@ class DisplayTimer extends React.Component<propsTimer>{
     private timer: Timer = new Timer();
     private decimalSecond: number;
     private timeLeft: number;
-    private keySelfElement: string = `timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`;
+    private keySelfElement: string =
+        `timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`
+    ;
     private selfElement: HTMLElement;
 
     // dictates the updated time

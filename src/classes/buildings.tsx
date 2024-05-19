@@ -1,6 +1,6 @@
 import React from 'react';
 import FloorFactory from './floor.tsx';
-import Elevators from './elevators.tsx';
+import ElevatorsSystem from './elevators.tsx';
 import * as Styles from '../stylesFiles/buildings.styles.ts'
 import settings from '../settings.ts';
 
@@ -12,7 +12,7 @@ interface propsBuilding {
     buildingNumber: number;
 }
 class Building extends React.Component<propsBuilding> {
-    private elevatorSystem: Elevators = new Elevators({
+    private elevatorSystem: ElevatorsSystem = new ElevatorsSystem({
         buildingNumber: this.props.buildingNumber,
         numberOfElevators: this.props.numberOfElevators
     })

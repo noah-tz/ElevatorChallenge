@@ -7,11 +7,11 @@ const audio: string = require('../media/ding.mp3')
 const elevatorImage: string = require('../media/elv.png');
 
 // Class 'Elevators' represents a system of elevators (of one building)
-interface elevatorProps {
+interface elevatorsSystemProps {
     buildingNumber: number;
     numberOfElevators: number;
 }
-class Elevators extends React.Component<elevatorProps> {
+class ElevatorsSystem extends React.Component<elevatorsSystemProps> {
     private elevators: Record<number, Elevator> = {};
 
     constructor(props: any){
@@ -25,7 +25,7 @@ class Elevators extends React.Component<elevatorProps> {
                 elevatorNumber: elevatorNumber,
                 buildingNumber: this.props.buildingNumber
             });
-        }        
+        }
     }
 
     // Finds the fast elevator in the building and orders it
@@ -67,12 +67,16 @@ class Elevator extends React.Component<propsElevator>{
     private orders: number[] = [];
     private timerWaiting = new Timer();
     private currentFloor: number = 1;
-    private keyElevator: string = `buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`;
+    private keyElevator: string = 
+        `buildingNumber ${this.props.buildingNumber} elevatorNumber ${this.props.elevatorNumber}`
+    ;
 
     // Adds an order to the order queue
     addOrder(floorNumber: number): void{
         this.orders.push(floorNumber);
-        const buttonElement: HTMLElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`)!;
+        const buttonElement: HTMLElement = document.getElementById(
+            `ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`
+        )!;
         buttonElement.style.color = 'green';
         if (
             this.orders.length === 1 &&
@@ -98,10 +102,12 @@ class Elevator extends React.Component<propsElevator>{
         setTimeout(async () => {
             const dingAudio = new Audio(audio);
             dingAudio.play();
-            const buttonElement: HTMLElement = document.getElementById(`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`)!;
+            const buttonElement: HTMLElement = document.getElementById(
+                `ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`
+            )!;
             buttonElement.style.color = 'black';
             await sleep(2);
-            if (this.orders.length > 0) {
+            if (this.orders.length) {
                 this.moveToNextFloor(this.orders[0]);        
             }
         }, standbySeconds * 1000);
@@ -133,4 +139,4 @@ class Elevator extends React.Component<propsElevator>{
     }
 }
 
-export default Elevators;
+export default ElevatorsSystem;
