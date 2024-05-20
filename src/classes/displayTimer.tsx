@@ -57,7 +57,7 @@ class DisplayTimer extends React.Component<propsTimer>{
                 await sleep(0.5)
                 this.setTextTimer('');
                 clearInterval(intervalId);
-        }
+            }
         }, 1000);
     }
 
