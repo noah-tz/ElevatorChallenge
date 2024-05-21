@@ -1,60 +1,10 @@
 import React from 'react';
-import * as Stiles from '../stylesFiles/elevators.styles.ts';
-import settings from '../settings.ts';
-import { Timer, getSecondsForSingleOrder, sleep } from '../utils.ts' 
+import settings from '../../settings.ts';
+import { Timer, getSecondsForSingleOrder, sleep } from '../../utils.ts'
+import * as Stiles from '../../stylesFiles/elevators.styles.ts';
 
-const audio: string = require('../media/ding.mp3')
-const elevatorImage: string = require('../media/elv.png');
-
-// Class 'Elevators' represents a system of elevators (of one building)
-interface elevatorsSystemProps {
-    buildingNumber: number;
-    numberOfElevators: number;
-}
-class ElevatorsSystem extends React.Component<elevatorsSystemProps> {
-    private elevators: Record<number, Elevator> = {};
-
-    constructor(props: any){
-        super(props);
-        this.createElevators();
-    }
-
-    createElevators(): void {
-        for (let elevatorNumber: number = 1; elevatorNumber <= this.props.numberOfElevators; elevatorNumber++) {
-            this.elevators[elevatorNumber] = new Elevator({
-                elevatorNumber: elevatorNumber,
-                buildingNumber: this.props.buildingNumber
-            });
-        }
-    }
-
-    // Finds the fast elevator in the building and orders it
-    orderFasterElevator(numberFloor: number): number {
-        let elevatorFaster: string = '1';
-        let timeElevatorFaster: number = Infinity;
-        for (let elevatorNumber of Object.keys(this.elevators)){
-            let timeElevator: number = this.elevators[Number(elevatorNumber)].getSecondsOrder(numberFloor);
-            if (timeElevator < timeElevatorFaster) {
-                elevatorFaster = elevatorNumber;
-                timeElevatorFaster = timeElevator;
-            }
-        }
-        this.elevators[elevatorFaster].addOrder(numberFloor);
-        return timeElevatorFaster;
-    }
-
-    render(): React.ReactNode {
-        return(
-            <>
-            {Object.keys(this.elevators).map((elevatorNumber, idx) => (
-                <div key={idx +1}>
-                    {this.elevators[elevatorNumber].render()}
-                </div>
-            ))}
-            </>
-        )
-    }
-}
+const audio: string = require('../../media/ding.mp3')
+const elevatorImage: string = require('../../media/elv.png');
 
 
 
@@ -74,10 +24,6 @@ class Elevator extends React.Component<propsElevator>{
   // adds an order to the order queue and moves the elevator (if not in motion).
     addOrder(floorNumber: number): void{
         this.orders.push(floorNumber);
-        const buttonElement: HTMLElement = document.getElementById(
-            `ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`
-        )!;
-        buttonElement.style.color = 'green';
         if (
             this.orders.length === 1 &&
             !this.timerWaiting.getSecondsLeft()
@@ -104,10 +50,6 @@ class Elevator extends React.Component<propsElevator>{
         setTimeout(async () => {
             const dingAudio = new Audio(audio);
             dingAudio.play();
-            const buttonElement: HTMLElement = document.getElementById(
-                `ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${floorNumber}`
-            )!;
-            buttonElement.style.color = 'black';
             await sleep(2);
             if (this.orders.length) {
                 this.moveToNextFloor(this.orders[0]);        
@@ -141,4 +83,5 @@ class Elevator extends React.Component<propsElevator>{
     }
 }
 
-export default ElevatorsSystem;
+
+export default Elevator

@@ -1,6 +1,6 @@
 import React from 'react';
 import FloorFactory from './floor.tsx';
-import ElevatorsSystem from './elevators.tsx';
+import ElevatorsSystem from './elevators/elevators.tsx';
 import * as Styles from '../stylesFiles/buildings.styles.ts'
 import settings from '../settings.ts';
 

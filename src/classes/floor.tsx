@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styles from '../stylesFiles/floors.style.ts';
 import DisplayTimer from './displayTimer.tsx';
-import ElevatorsSystem from './elevators.tsx';
+import ElevatorsSystem from './elevators/elevators.tsx';
 
 // Class 'Floor' representing each floor in building
 interface propsFloor {
@@ -18,14 +18,21 @@ class Floor extends React.Component<propsFloor> {
     private keyTimer =
         `timerOFBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`
     ;
+    private keyButton = 
+        `buttonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`
     
     // Handles the elevator booking and starts the timer display.
     handelClick() : void {
         if (
             document.getElementById(this.keyTimer)!.innerText === ''
         ) {
+            const buttonElement: HTMLElement = document.getElementById(this.keyButton)!;
+            buttonElement.style.color = 'green';
             const seconds: number = this.props.orderElevator();
             if (seconds > 0) {
+                setTimeout(() => {
+                    buttonElement.style.color = 'black'    
+                }, seconds *1000)
                 this.timer.start(seconds);                
             }
         }
@@ -38,7 +45,7 @@ class Floor extends React.Component<propsFloor> {
                 >
                 <Styles.metalLinear
                     onClick={() => this.handelClick()}
-                    id={`ButtonOfBuildingNumber ${this.props.buildingNumber} floorNumber ${this.props.floorNumber}`}
+                    id={this.keyButton}
                 >
                     {this.props.floorNumber}
                 </Styles.metalLinear>
